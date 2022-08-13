@@ -1,10 +1,16 @@
-function App() {
+import { ThemeProvider } from "styled-components"
+import { Summary } from "./components/Summary"
+import { Transactions } from "./pages/Transactions"
+import { GlobalStyle } from "./styles/global"
+import { defaultTheme } from "./styles/themes/default"
+
+export function App() {
   return (
-    <>
-    <h1>Hello DT MONEY</h1>
-    </>
+    <ThemeProvider theme={defaultTheme}>
+      <GlobalStyle/>
+    <Transactions/>
+    <Summary/>
+    </ThemeProvider>
     
   )
 }
-
-export default App
