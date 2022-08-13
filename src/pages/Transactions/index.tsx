@@ -1,9 +1,21 @@
+import { useEffect } from "react";
 import { Header } from "../../components/Header";
 import { SearchForm } from "../../components/SearchForm";
 import { Summary } from "../../components/Summary";
 import { PriceHighLight, TransactionsContainer, TransactionsTable } from "./styles";
 
+async function loadTransactions(){
+    const response = await fetch('http://localhost:3333/transactions')
+    const data = await response.json()
+    console.log(data)
+}
+
 export function Transactions(){
+    useEffect(() => {
+        loadTransactions()
+    },[])
+
+
     return(
         <>
         <Header />
