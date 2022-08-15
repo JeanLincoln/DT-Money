@@ -9,6 +9,7 @@ import { CloseButton,
         TransactionTypeButton 
     } from "./styles";
 import { Controller, useForm } from "react-hook-form";
+import { api } from "../../lib/axios";
 
 const newTransactionFormSchema = z.object({
     description: z.string(),
@@ -30,8 +31,15 @@ type NewTransactionsFormInputs = z.infer<typeof newTransactionFormSchema>
     })
     
     async function handleCreateNewTransaction(data:NewTransactionsFormInputs){
-        await new Promise(resolve => setTimeout(resolve,2000))
-        console.log(data)
+        const {description,category,type,price} = data
+
+        await api.post('transactions', {
+            description,
+            category,
+            type,
+            price,
+            createdAt: new Date()
+        })
     }
 
     return (
