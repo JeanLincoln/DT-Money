@@ -10,9 +10,17 @@ type Transaction = {
     createdAt:string
 }
 
+type CreateTransactionInputs = {
+    description:string,
+    category:string,
+    type:'income' | 'outcome',
+    price:number,
+}
+
 type TransactionsContextType = {
     transactions: Transaction[];
     fetchTransactions: (query?:string)=> void
+    createTransaction : (data:CreateTransactionInputs) => void
 }
 
 type CyclesContextProviderProps = {
@@ -36,9 +44,27 @@ export function TransactionsProvider({children}:CyclesContextProviderProps){
     useEffect(() => {
         fetchTransactions()
     },[])
+
+    async function createTransaction(data:CreateTransactionInputs){
+        const {description,category,type,price} = data
+
+        const response = await api.post('transactions', {
+            description,
+            category,
+            type,
+            price,
+            createdAt: new Date()
+        })
+
+        setTransactions(state => [response.data, ...state])
+    }
     
     return(
-        <TransactionsContext.Provider value={{transactions, fetchTransactions}}>
+        <TransactionsContext.Provider value={{
+                transactions, 
+                fetchTransactions,
+                createTransaction
+            }}>
             {children}
         </TransactionsContext.Provider>
     )
