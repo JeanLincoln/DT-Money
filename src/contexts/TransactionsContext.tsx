@@ -46,7 +46,7 @@ export function TransactionsProvider({ children }: CyclesContextProviderProps) {
 
   useEffect(() => {
     fetchTransactions()
-  }, [])
+  }, [fetchTransactions])
 
   const createTransaction = useCallback(
     async (data: CreateTransactionInputs) => {
